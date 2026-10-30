@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statystyki Sprzedaży | Robert Jakubiak - Portfolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --surface-color: rgba(30, 41, 59, 0.7);
+            /* Bursztynowy/Pomarańczowy akcent dla tego projektu */
+            --primary: #f59e0b;
+            --primary-hover: #d97706;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --success: #10b981;
+            --accent-secondary: #ea580c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            line-height: 1.6;
+            background-image: 
+                linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), 
+                url('tlo.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* Nav */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Fira Code', monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        .logo span { color: var(--primary); }
+        .back-link {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s ease;
+        }
+        .back-link:hover { color: var(--primary); }
+
+        /* Główne kontenery */
+        .container {
+            max-width: 1200px;
+            margin: 100px auto 40px;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section Projektu */
+        .project-hero {
+            background: var(--surface-color);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent-secondary));
+        }
+
+        .project-meta-badges {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--primary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-family: 'Fira Code', monospace;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .badge.version {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            border-color: rgba(16, 185, 129, 0.2);
+        }
+
+        .project-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .project-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 800px;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: #fff;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: fit-content;
+            margin-top: 1rem;
+        }
+
+        .download-btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        /* Układ dwukolumnowy dla treści */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .content-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Szklany panel dla głównego tekstu */
+        .text-content {
+            background: var(--surface-color);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-header {
+            font-size: 1.5rem;
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .text-content p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        .text-content ul {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .text-content ul li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+
+        .text-content ul li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Sidebar z technikalami */
+        .sidebar-card {
+            background: var(--surface-color);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tech-tag {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-family: 'Fira Code', monospace;
+            color: var(--text-main);
+        }
+
+        /* Galeria zrzutów ekranu */
+        .gallery {
+            margin-top: 3rem;
+            background: var(--surface-color);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            aspect-ratio: 16/9;
+            background: rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover img { opacity: 1; }
+
+        /* Cyfrowy dymek (Tooltip) */
+        .tooltip-text {
+            position: absolute;
+            bottom: -50px; /* Domyślnie schowany pod obrazkiem */
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.95);
+            color: var(--primary);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .gallery-item:hover .tooltip-text {
+            bottom: 15px; /* Wysuwa się do góry po najechaniu */
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* --------------------------------- */
+        /* Lightbox CSS (Powiększanie zdjęć) */
+        /* --------------------------------- */
+        .lightbox {
+            display: none; 
+            position: fixed;
+            z-index: 2000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(15, 23, 42, 0.95); 
+            backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox img {
+            max-width: 85%;
+            max-height: 85vh;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            border: 1px solid var(--primary);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+            user-select: none;
+        }
+
+        .lightbox.active img {
+            transform: scale(1);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: var(--text-muted);
+            font-size: 40px;
+            font-weight: 300;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+            z-index: 2010;
+        }
+
+        .lightbox-close:hover {
+            color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        /* Strzałki nawigacji */
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 3rem;
+            font-weight: 300;
+            cursor: pointer;
+            padding: 1rem;
+            user-select: none;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+            z-index: 2010;
+        }
+
+        .lightbox-nav:hover {
+            color: var(--primary);
+            text-shadow: 0 0 15px var(--primary);
+        }
+
+        .nav-prev { left: 2%; }
+        .nav-next { right: 2%; }
+
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            margin-top: 4rem;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">R_<span>Jakubiak</span></a>
+            <a href="index.html#projekty" class="back-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Powrót
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Sekcja Hero Projektu -->
+        <div class="project-hero">
+            <div class="project-meta-badges">
+                <span class="badge version">v1.3.1</span>
+                <span class="badge">Aplikacja Analityczna</span>
+                <span class="badge">Zarządzanie & Raportowanie</span>
+            </div>
+            
+            <h1 class="project-title">Statystyki Sprzedaży</h1>
+            <p class="project-subtitle">
+                Zewnętrzny silnik analityczny dla e-commerce. Przetwarza surowe dane o zamówieniach na interaktywne wykresy, wyliczenia zysku netto i menedżerskie raporty zarządcze. Omija strukturalne ograniczenia standardowego API sklepu.
+            </p>
+
+            <a href="#pobierz" class="download-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                Pobierz aplikację (.exe)
+            </a>
+        </div>
+
+        <div class="content-grid">
+            <div class="text-content">
+                <h2 class="section-header">Zrozumiale o projekcie</h2>
+                <p>
+                    Wbudowane mechanizmy statystyczne w systemach e-commerce (takich jak PrestaShop) często okazują się niewystarczające. Obliczają one kluczowe wskaźniki "w locie", co przy dużych bazach danych mocno obciąża serwer. Co więcej, standardowe interfejsy API nie oferują gotowych punktów dostępowych (endpointów), które potrafiłyby zwrócić zbiorcze podsumowanie, np. zysk netto z ostatnich 12 miesięcy z podziałem na kanały sprzedaży.
+                </p>
+                <p>
+                    Zbudowałem autorską aplikację <strong>Statystyki Sprzedaży</strong>, by uniezależnić analitykę od tych ograniczeń. Narzędzie wykorzystuje zoptymalizowane, dedykowane skrypty po stronie serwera oraz potężne biblioteki do analizy danych (m m.in. <code>pandas</code>), aby błyskawicznie "zassać" surowe informacje. Następnie przetwarza je na gotowe do analizy, wizualne pigułki wiedzy, ułatwiając podejmowanie strategicznych decyzji w ORIMED.
+                </p>
+
+                <h2 class="section-header" style="margin-top: 2.5rem;">Kluczowe funkcje</h2>
+                <ul>
+                    <li><strong>Zoptymalizowany pobór danych (Custom Endpoints / MySQL):</strong> Ominięcie ograniczeń domyślnego API poprzez zastosowanie dedykowanego pliku PHP zwracającego czysty format JSON oraz bezpośrednich zapytań SQL. Gwarantuje to najszybszą możliwą metodę ekstrakcji wskaźników z bazy sklepu.</li>
+                    <li><strong>Zaawansowana analityka produktów:</strong> Precyzyjne generowanie zestawień "Top Produktów", analizowanie trendów sprzedażowych, wielkości zamówień i, co najważniejsze, kalkulacja realnego zysku netto w zadanym czasie.</li>
+                    <li><strong>Wizualizacja (Interaktywne Wykresy):</strong> Surowe, tabelaryczne informacje transformowane są w czytelne, interaktywne wykresy osadzone bezpośrednio w interfejsie aplikacji. Pozwala to na szybką wzrokową analizę spadków i wzrostów.</li>
+                    <li><strong>Profesjonalne raporty menedżerskie:</strong> Gotowe roczne lub miesięczne podsumowania finansowe można jednym kliknięciem wyeksportować do estetycznego dokumentu PDF lub do arkusza Excel, celem dalszej obróbki na spotkaniach zarządu.</li>
+                    <li><strong>Lekkość i wydajność:</strong> Aplikacja przetwarza dane w pamięci na komputerze użytkownika, dzięki czemu skomplikowane operacje matematyczne i filtrowanie nie spowalniają działania samego sklepu internetowego.</li>
+                </ul>
+            </div>
+
+            <div class="sidebar">
+                <div class="sidebar-card">
+                    <h3>Technologie i narzędzia</h3>
+                    <div class="tech-list">
+                        <span class="tech-tag">Python (pandas)</span>
+                        <span class="tech-tag">Custom PHP / JSON</span>
+                        <span class="tech-tag">MySQL</span>
+                        <span class="tech-tag">PrestaShop</span>
+                        <span class="tech-tag">Matplotlib / GUI</span>
+                    </div>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3>Szczegóły</h3>
+                    <ul class="text-content" style="margin-bottom: 0; padding: 0; background: none; border: none; box-shadow: none; backdrop-filter: none;">
+                        <li style="margin-bottom: 0.3rem;"><strong>Data wdrożenia:</strong> Wrzesień 2026</li>
+                        <li style="margin-bottom: 0.3rem;"><strong>Środowisko:</strong> ORIMED E-commerce</li>
+                        <li style="margin-bottom: 0;"><strong>Status:</strong> Używana analitycznie</li>
+                    </ul>
+                </div>
+                
+                <div class="sidebar-card" style="border-color: rgba(245, 158, 11, 0.3);">
+                    <h3>Zgłoś problem / Rozwój</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+                        Potrzebujesz nowego wskaźnika analitycznego lub wykresu do najbliższego raportu? Zgłoś to w IT.
+                    </p>
+                    <a href="mailto:r.jakubiak@orimed.pl" class="tech-tag" style="text-decoration: none; color: var(--primary); display: inline-block;">Napisz wiadomość</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Galeria zrzutów ekranu z cyfrowymi tooltipami -->
+        <div class="gallery">
+            <h2 class="section-header">Interfejs i Działanie (Zrzuty ekranu)</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <span class="tooltip-text">Panel główny - Wykresy sprzedaży</span>
+                    <img src="img/statystyki-sprzedazy/widok_panelu-glownego_z_wykresami.png" alt="Widok panelu głównego z wykresami">
+                </div>
+                <div class="gallery-item">
+                    <span class="tooltip-text">Zestawienie analityczne Top Produktów</span>
+                    <img src="img/statystyki-sprzedazy/widok_listy_najlepiej_sprzedajacych_sie_produktow.png" alt="Widok listy najlepiej sprzedających się produktów">
+                </div>
+                <div class="gallery-item">
+                    <span class="tooltip-text">Wygenerowany raport dla zarządu (PDF)</span>
+                    <img src="img/statystyki-sprzedazy/audyt_wyeksportowany_do_formatu_PDF.png" alt="Audyt wyeksportowany do formatu PDF">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Robert Jakubiak | Systemy wewnętrzne & Automatyzacja.</p>
+    </footer>
+
+    <!-- Lightbox Modal z wbudowaną nawigacją -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightbox-close">&times;</span>
+        <span class="lightbox-nav nav-prev" id="lightbox-prev">&#10094;</span>
+        
+        <img id="lightbox-img" src="" alt="Powiększony zrzut ekranu">
+        
+        <span class="lightbox-nav nav-next" id="lightbox-next">&#10095;</span>
+    </div>
+
+    <!-- Skrypt obsługujący powiększanie zdjęć i slider galerii -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxClose = document.getElementById('lightbox-close');
+            const btnPrev = document.getElementById('lightbox-prev');
+            const btnNext = document.getElementById('lightbox-next');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            
+            // Tablica ze ścieżkami do obrazków w galerii
+            const images = Array.from(galleryItems).map(item => item.querySelector('img').src);
+            let currentIndex = 0;
+
+            function updateLightboxImage() {
+                lightboxImg.src = images[currentIndex];
+            }
+
+            // Otwieranie klikniętego zdjęcia
+            galleryItems.forEach((item, index) => {
+                item.addEventListener('click', () => {
+                    currentIndex = index;
+                    updateLightboxImage();
+                    lightbox.classList.add('active');
+                });
+            });
+
+            // Strzałka w lewo (poprzednie)
+            btnPrev.addEventListener('click', (e) => {
+                e.stopPropagation(); // Blokuje propagację (zapobiega zamknięciu lightboxa)
+                currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;
+                updateLightboxImage();
+            });
+
+            // Strzałka w prawo (następne)
+            btnNext.addEventListener('click', (e) => {
+                e.stopPropagation(); 
+                currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0;
+                updateLightboxImage();
+            });
+
+            // Zamykanie krzyżykiem
+            lightboxClose.addEventListener('click', () => {
+                lightbox.classList.remove('active');
+            });
+
+            // Zamykanie kliknięciem w tło
+            lightbox.addEventListener('click', (e) => {
+                if (e.target !== lightboxImg && e.target !== btnPrev && e.target !== btnNext) {
+                    lightbox.classList.remove('active');
+                }
+            });
+
+            // Obsługa klawiatury (ESC, Strzałka Lewo, Strzałka Prawo)
+            document.addEventListener('keydown', (e) => {
+                if (!lightbox.classList.contains('active')) return; // Reaguj tylko gdy otwarte
+                
+                if (e.key === 'Escape') {
+                    lightbox.classList.remove('active');
+                } else if (e.key === 'ArrowRight') {
+                    currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0;
+                    updateLightboxImage();
+                } else if (e.key === 'ArrowLeft') {
+                    currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;
+                    updateLightboxImage();
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Cenników | Robert Jakubiak - Portfolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --surface-color: rgba(30, 41, 59, 0.7);
+            --primary: #38bdf8;
+            --primary-hover: #0ea5e9;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --success: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            line-height: 1.6;
+            background-image: 
+                linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), 
+                url('tlo.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* Nav (Spójny z index.html) */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Fira Code', monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        .logo span { color: var(--primary); }
+        .back-link {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s ease;
+        }
+        .back-link:hover { color: var(--primary); }
+
+        /* Główne kontenery */
+        .container {
+            max-width: 1200px;
+            margin: 100px auto 40px;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section Projektu */
+        .project-hero {
+            background: var(--surface-color);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--success));
+        }
+
+        .project-meta-badges {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--primary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-family: 'Fira Code', monospace;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        .badge.version {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            border-color: rgba(16, 185, 129, 0.2);
+        }
+
+        .project-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .project-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 800px;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: #fff;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: fit-content;
+            margin-top: 1rem;
+        }
+
+        .download-btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+        }
+
+        /* Układ dwukolumnowy dla treści */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .content-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Szklany panel dla głównego tekstu */
+        .text-content {
+            background: var(--surface-color);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-header {
+            font-size: 1.5rem;
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .text-content p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        .text-content ul {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .text-content ul li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+
+        .text-content ul li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Sidebar z technikalami */
+        .sidebar-card {
+            background: var(--surface-color);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tech-tag {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-family: 'Fira Code', monospace;
+            color: var(--text-main);
+        }
+
+        /* Galeria zrzutów ekranu w szklanym panelu */
+        .gallery {
+            margin-top: 3rem;
+            background: var(--surface-color);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            aspect-ratio: 16/9;
+            background: rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+            border-color: var(--primary);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover img { opacity: 1; }
+
+        /* Placeholder dla braku zdjęcia w prototypie */
+        .placeholder-text {
+            position: absolute;
+            font-family: 'Fira Code', monospace;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            margin-top: 4rem;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">R_<span>Jakubiak</span></a>
+            <a href="index.html#projekty" class="back-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Powrót
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Sekcja Hero Projektu -->
+        <div class="project-hero">
+            <div class="project-meta-badges">
+                <span class="badge version">v1.2.0</span>
+                <span class="badge">Aplikacja Desktopowa</span>
+                <span class="badge">Narzędzie wewnętrzne</span>
+            </div>
+            
+            <h1 class="project-title">Generator Cenników</h1>
+            <p class="project-subtitle">
+                Zautomatyzowane narzędzie desktopowe uwalniające dział handlowy od ręcznego przepisywania danych. Konwertuje bazę produktów z systemu magazynowego bezpośrednio do profesjonalnych dokumentów sprzedażowych.
+            </p>
+
+            <a href="#pobierz" class="download-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                Pobierz aplikację (.exe)
+            </a>
+        </div>
+
+        <div class="content-grid">
+            <!-- Kolumna z opisem (Lżejszy język) -->
+            <div class="text-content">
+                <h2 class="section-header">Zrozumiale o projekcie</h2>
+                <p>
+                    Wyobraź sobie, że musisz przygotować nowy cennik dla kluczowego klienta hurtowego. Normalnie oznaczałoby to wejście do systemu, wyeksportowanie setek pozycji, a następnie ręczne modyfikowanie cen, formatowanie tabel i układanie tego w dokumencie Word lub Excelu. To proces, który może zająć wiele godzin i jest bardzo podatny na ludzkie błędy.
+                </p>
+                <p>
+                    <strong>Generator Cenników</strong> rozwiązuje ten problem całkowicie. To prosta w obsłudze aplikacja "okienkowa", która wykonuje całą "czarną robotę" w ułamku sekundy. Użytkownik wybiera tylko kryteria, a program sam komunikuje się z bazą danych, pobiera odpowiednie produkty, narzuca zdefiniowane marże i wypluwa gotowy, sformatowany plik.
+                </p>
+
+                <h2 class="section-header" style="margin-top: 2.5rem;">Kluczowe funkcje</h2>
+                <ul>
+                    <li><strong>Bezpośrednie połączenie z magazynem:</strong> Pobieranie rekordów produktów na żywo z bazy Comarch ERP Optima. Brak konieczności ręcznego eksportu danych pośrednich.</li>
+                    <li><strong>Filtrowanie i modyfikacje:</strong> Wbudowane filtry tekstowe pomagające wykluczyć niechciane towary z cennika.</li>
+                    <li><strong>Elastyczne modyfikatory cen:</strong> Możliwość automatycznego przeliczania wartości w zależności od ustalonych progów, rabatów czy narzutów (modyfikatory cen).</li>
+                    <li><strong>Profesjonalny eksport:</strong> Rozwiązanie generuje od razu sformatowane dokumenty, obsługując wyjście do plików MS Word (DOCX) oraz arkuszy kalkulacyjnych (XLSX).</li>
+                </ul>
+            </div>
+
+            <!-- Kolumna boczna -->
+            <div class="sidebar">
+                <div class="sidebar-card">
+                    <h3>Technologie i narzędzia</h3>
+                    <div class="tech-list">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">PyQt / Tkinter</span>
+                        <span class="tech-tag">Comarch ERP Optima</span>
+                        <span class="tech-tag">MS Word (docx)</span>
+                        <span class="tech-tag">MS Excel (openpyxl)</span>
+                        <span class="tech-tag">SQL</span>
+                    </div>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3>Szczegóły</h3>
+                    <ul class="text-content" style="margin-bottom: 0; padding: 0; background: none; border: none; box-shadow: none; backdrop-filter: none;">
+                        <li style="margin-bottom: 0.3rem;"><strong>Data wydania:</strong> Wrzesień 2026</li>
+                        <li style="margin-bottom: 0.3rem;"><strong>Platforma:</strong> Windows (Desktop)</li>
+                        <li style="margin-bottom: 0;"><strong>Status:</strong> Używana aktywnie</li>
+                    </ul>
+                </div>
+                
+                <div class="sidebar-card" style="border-color: rgba(56, 189, 248, 0.3);">
+                    <h3>Zgłoś problem / Rozwój</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+                        Masz pomysł na nową funkcję np. dodatkowy format eksportu? Zgłoś to w dziale IT.
+                    </p>
+                    <a href="mailto:r.jakubiak@orimed.pl" class="tech-tag" style="text-decoration: none; color: var(--primary); display: inline-block;">Napisz wiadomość</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Galeria zrzutów ekranu -->
+        <div class="gallery">
+            <h2 class="section-header">Interfejs i Działanie (Zrzuty ekranu)</h2>
+            <div class="gallery-grid">
+                <!-- Placeholder 1 -->
+                <div class="gallery-item">
+                    <span class="placeholder-text">Widok główny - Filtry (Zmień atrybut src)</span>
+                    <img src="/api/placeholder/800/450" alt="Widok panelu głównego">
+                </div>
+                <!-- Placeholder 2 -->
+                <div class="gallery-item">
+                    <span class="placeholder-text">Wybór modyfikatorów ceny (Zmień atrybut src)</span>
+                    <img src="/api/placeholder/800/450" alt="Wybór modyfikatorów">
+                </div>
+                <!-- Placeholder 3 -->
+                <div class="gallery-item">
+                    <span class="placeholder-text">Podgląd wygenerowanego Worda (Zmień atrybut src)</span>
+                    <img src="/api/placeholder/800/450" alt="Efekt końcowy w MS Word">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Robert Jakubiak | Systemy wewnętrzne & Automatyzacja.</p>
+    </footer>
+
+</body>
+</html>

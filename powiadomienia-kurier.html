@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Powiadomienia o kurierze | Robert Jakubiak - Portfolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --surface-color: rgba(30, 41, 59, 0.7);
+            /* Fioletowy akcent dla tego projektu */
+            --primary: #a855f7;
+            --primary-hover: #9333ea;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --success: #10b981;
+            --info: #3b82f6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            line-height: 1.6;
+            background-image: 
+                linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), 
+                url('tlo.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* Nav (Spójny z index.html) */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Fira Code', monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        .logo span { color: var(--primary); }
+        .back-link {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s ease;
+        }
+        .back-link:hover { color: var(--primary); }
+
+        /* Główne kontenery */
+        .container {
+            max-width: 1200px;
+            margin: 100px auto 40px;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section Projektu */
+        .project-hero {
+            background: var(--surface-color);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--info));
+        }
+
+        .project-meta-badges {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: rgba(168, 85, 247, 0.1);
+            color: var(--primary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-family: 'Fira Code', monospace;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+
+        .badge.version {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            border-color: rgba(16, 185, 129, 0.2);
+        }
+
+        .project-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .project-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 800px;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: #fff;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: fit-content;
+            margin-top: 1rem;
+        }
+
+        .download-btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+        }
+
+        /* Układ dwukolumnowy dla treści */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .content-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Zmiana: Szklany panel dla głównego tekstu */
+        .text-content {
+            background: var(--surface-color);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-header {
+            font-size: 1.5rem;
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .text-content p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        .text-content ul {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .text-content ul li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+
+        .text-content ul li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Sidebar z technikalami */
+        .sidebar-card {
+            background: var(--surface-color);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tech-tag {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-family: 'Fira Code', monospace;
+            color: var(--text-main);
+        }
+
+        /* Galeria zrzutów ekranu */
+        .gallery {
+            margin-top: 3rem;
+            background: var(--surface-color);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            aspect-ratio: 16/9;
+            background: rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+            border-color: var(--primary);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover img { opacity: 1; }
+
+        .placeholder-text {
+            position: absolute;
+            font-family: 'Fira Code', monospace;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            margin-top: 4rem;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">R_<span>Jakubiak</span></a>
+            <a href="index.html#projekty" class="back-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Powrót
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Sekcja Hero Projektu -->
+        <div class="project-hero">
+            <div class="project-meta-badges">
+                <span class="badge version">v2.1.0</span>
+                <span class="badge">Aplikacja Desktopowa</span>
+                <span class="badge">Logistyka & Obsługa Klienta</span>
+            </div>
+
+            <h1 class="project-title">Powiadomienia o kurierze</h1>
+            <p class="project-subtitle">
+                W pełni spersonalizowane rozwiązanie logistyczne, które drastycznie przyspiesza komunikację posprzedażową, minimalizując błędy i całkowicie odciążając zespół obsługi klienta.
+            </p>
+
+            <a href="#pobierz" class="download-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                Pobierz aplikację (.exe)
+            </a>
+        </div>
+
+        <div class="content-grid">
+            <!-- Kolumna z opisem w szklanym panelu -->
+            <div class="text-content">
+                <h2 class="section-header">Zrozumiale o projekcie</h2>
+                <p>
+                    Wysyłanie klientom informacji o planowanej wizycie kuriera to jeden z kluczowych elementów budowania pozytywnych doświadczeń zakupowych. Jednak gdy proces ten realizowany jest ręcznie, staje się wyjątkowo nużący. Ręczne przepisywanie okienek czasowych i dobieranie odpowiednich szablonów wiadomości dla każdej firmy kurierskiej z osobna zabiera cenne minuty, które zespół mógłby poświęcić na realną pomoc klientom.
+                </p>
+                <p>
+                    Aplikacja <strong>Powiadomienia o kurierze</strong> została zaprojektowana po to, aby wyeliminować powtarzalne klikanie. Użytkownik wprowadza w prostym panelu jedynie podstawowe dane wizyty. Program natychmiast, w tle, dobiera i formatuje odpowiednią treść, dodaje graficzne stopki i bezszelestnie przekazuje gotową, perfekcyjną wiadomość prosto do systemowego programu Microsoft Outlook.
+                </p>
+
+                <h2 class="section-header" style="margin-top: 2.5rem;">Kluczowe funkcje</h2>
+                <ul>
+                    <li><strong>Dynamiczne szablony HTML:</strong> System inteligentnie rozpoznaje wybraną firmę kurierską i automatycznie podmienia treść oraz logotypy wewnątrz wiadomości e-mail.</li>
+                    <li><strong>Zarządzanie czasem dostawy:</strong> Aplikacja samodzielnie przetwarza i poprawnie formatuje wprowadzane zakresy godzinowe (np. "pomiędzy 10:00 a 14:00"), eliminując czeskie błędy i literówki.</li>
+                    <li><strong>Bezpośrednia integracja z MS Outlook:</strong> Dzięki wykorzystaniu modułu <code>win32com</code>, program komunikuje się z klientem pocztowym na poziomie systemowym. Nie wymaga dodatkowych konfiguracji serwerów SMTP – wysyła wiadomości prosto z konta użytkownika.</li>
+                    <li><strong>Personalizacja stopek (Signatures):</strong> Wbudowane narzędzia dają użytkownikom pełną kontrolę nad firmowymi podpisami, wspierając zarówno czysty tekst, jak i złożone warianty graficzne.</li>
+                    <li><strong>System automatycznych aktualizacji:</strong> Aplikacja "żyje" i sama o siebie dba. Zaawansowany moduł sieciowy łączy się z zewnętrznym serwerem firmowym, weryfikuje wersję i samoczynnie pobiera nowe aktualizacje.</li>
+                    <li><strong>Dopracowany interfejs użytkownika (UX/UI):</strong> Architektura zabezpieczona przed podwójnym kliknięciem, wygodne dymki podpowiedzi (tooltipy) nad przyciskami, przypisane ikony systemowe oraz przejrzysty panel "O programie".</li>
+                </ul>
+            </div>
+
+            <!-- Kolumna boczna -->
+            <div class="sidebar">
+                <div class="sidebar-card">
+                    <h3>Technologie i narzędzia</h3>
+                    <div class="tech-list">
+                        <span class="tech-tag">Python 3</span>
+                        <span class="tech-tag">tkinter</span>
+                        <span class="tech-tag">win32com.client</span>
+                        <span class="tech-tag">MS Outlook API</span>
+                        <span class="tech-tag">HTML / CSS</span>
+                    </div>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3>Szczegóły</h3>
+                    <ul class="text-content" style="margin-bottom: 0; padding: 0; background: none; border: none; box-shadow: none; backdrop-filter: none;">
+                        <li style="margin-bottom: 0.3rem;"><strong>Platforma:</strong> Windows (Desktop)</li>
+                        <li style="margin-bottom: 0.3rem;"><strong>Środowisko GUI:</strong> Natywny system OS</li>
+                        <li style="margin-bottom: 0;"><strong>Status:</strong> Używana aktywnie (Auto-Update)</li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-card" style="border-color: rgba(168, 85, 247, 0.3);">
+                    <h3>Zgłoś problem / Rozwój</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+                        Wprowadzamy nowego przewoźnika do firmy? Zgłoś potrzebę aktualizacji szablonów.
+                    </p>
+                    <a href="mailto:r.jakubiak@orimed.pl" class="tech-tag" style="text-decoration: none; color: var(--primary); display: inline-block;">Napisz wiadomość</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Galeria zrzutów ekranu w szklanym panelu -->
+        <div class="gallery">
+            <h2 class="section-header">Interfejs i Działanie (Zrzuty ekranu)</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <span class="placeholder-text">Widok główny - Wprowadzanie godzin</span>
+                    <img src="img/powiadomienia-kurier/widok_panelu_wprowadzania_czasu.png" alt="Widok panelu wprowadzania czasu">
+                </div>
+                <div class="gallery-item">
+                    <span class="placeholder-text">Wybór szablonów przewoźnika (Zmień atrybut src)</span>
+                    <img src="/api/placeholder/800/450" alt="Wybór firmy kurierskiej">
+                </div>
+                <div class="gallery-item">
+                    <span class="placeholder-text">Powiadomienie o pobieraniu aktualizacji (Zmień atrybut src)</span>
+                    <img src="/api/placeholder/800/450" alt="Moduł Auto-Update">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Robert Jakubiak | Systemy wewnętrzne & Automatyzacja.</p>
+    </footer>
+
+</body>
+</html>
