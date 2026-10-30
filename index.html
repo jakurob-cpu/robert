@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robert Jakubiak | Portfolio Programisty</title>
+    
+    <!-- Tailwind CSS do szybkiego stylowania -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Ikony Phosphor -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#38bdf8',
+                            hover: '#0ea5e9'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Wymagane tło ze zdjęciem tlo.jpg i gradientem maskującym */
+        body {
+            background-image: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), url('tlo.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #f8fafc;
+        }
+
+        /* Klasa pomocnicza dla szklanych kart (glassmorphism) */
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        /* Hover efekty dla szklanych kart */
+        .glass-panel-hover:hover {
+            background: rgba(30, 41, 59, 0.6);
+            border-color: rgba(56, 189, 248, 0.4);
+            transform: translateY(-5px);
+        }
+
+        /* Kursor w terminalu */
+        .cursor-blink {
+            display: inline-block;
+            width: 8px;
+            height: 18px;
+            background-color: #38bdf8;
+            vertical-align: middle;
+            animation: blink 1s step-end infinite;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        /* Prosta animacja pojawiania się dla CTA */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Paski przewijania (Scrollbar) */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-blue selection:text-white flex flex-col min-h-screen">
+
+    <nav class="fixed w-full z-50 top-0 glass-panel border-b-0 border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="#" class="font-mono text-xl font-bold text-white tracking-tight">
+                        <span class="text-brand-blue">&lt;</span>R_Jakubiak<span class="text-brand-blue">/&gt;</span>
+                    </a>
+                </div>
+                <!-- Linki Desktop -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#start" class="text-sm text-slate-300 hover:text-brand-blue transition-colors">Start</a>
+                    <a href="#o-mnie" class="text-sm text-slate-300 hover:text-brand-blue transition-colors">O mnie</a>
+                    <a href="#technologie" class="text-sm text-slate-300 hover:text-brand-blue transition-colors">Technologie</a>
+                    <a href="#projekty" class="text-sm text-slate-300 hover:text-brand-blue transition-colors">Projekty</a>
+                    <a href="#contact" class="text-sm text-slate-300 hover:text-brand-blue transition-colors">Kontakt</a>
+                </div>
+                <!-- Przycisk Menu Mobile -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-slate-300 hover:text-white p-2">
+                        <i class="ph ph-list text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Menu Mobile -->
+        <div id="mobile-menu" class="hidden md:hidden glass-panel border-t border-white/10">
+            <div class="px-2 pt-2 pb-3 space-y-1 flex flex-col">
+                <a href="#start" class="block px-3 py-2 text-base text-slate-300 hover:text-brand-blue mobile-link">Start</a>
+                <a href="#o-mnie" class="block px-3 py-2 text-base text-slate-300 hover:text-brand-blue mobile-link">O mnie</a>
+                <a href="#technologie" class="block px-3 py-2 text-base text-slate-300 hover:text-brand-blue mobile-link">Technologie</a>
+                <a href="#projekty" class="block px-3 py-2 text-base text-slate-300 hover:text-brand-blue mobile-link">Projekty</a>
+                <a href="#contact" class="block px-3 py-2 text-base text-slate-300 hover:text-brand-blue mobile-link">Kontakt</a>
+            </div>
+        </div>
+    </nav>
+
+    <header id="start" class="min-h-screen flex items-center justify-center pt-20 pb-12 px-4 relative">
+        <div class="max-w-3xl w-full z-10">
+            <!-- Okno terminala -->
+            <div class="glass-panel rounded-xl overflow-hidden shadow-2xl border border-white/20">
+                <!-- Pasek górny terminala -->
+                <div class="flex items-center px-4 py-3 bg-black/40 border-b border-white/10">
+                    <div class="flex space-x-2">
+                        <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                    </div>
+                    <div class="mx-auto text-xs text-slate-400 font-mono">
+                        bash - root@robert-jakubiak
+                    </div>
+                </div>
+                
+                <!-- Ciało terminala -->
+                <div class="p-6 sm:p-8 font-mono text-sm sm:text-base min-h-[220px] bg-black/50">
+                    <div id="terminal-text" class="text-green-400 leading-relaxed whitespace-pre-line"></div><span class="cursor-blink"></span>
+                </div>
+            </div>
+
+            <!-- Przycisk CTA -->
+            <div class="mt-10 flex justify-center opacity-0 animate-[fadeIn_1s_ease-in-out_2.5s_forwards]">
+                <a href="#o-mnie" class="glass-panel px-8 py-3 rounded-full font-medium hover:bg-white/10 transition-colors flex items-center gap-2 border border-white/20">
+                    Rozpocznij <i class="ph ph-arrow-down"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <section id="o-mnie" class="py-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold mb-10 flex items-center gap-3">
+                <i class="ph-fill ph-user-circle text-brand-blue"></i> O mnie
+            </h2>
+            
+            <div class="glass-panel rounded-2xl p-6 sm:p-10 text-slate-300 text-lg leading-relaxed space-y-6">
+                <p>
+                    Głównym motorem moich działań jest chęć realnego wpływania na poprawę komfortu pracy całego zespołu. Buduję oprogramowanie przede wszystkim dla działów wewnętrznych firmy – od administracji e-commerce, przez sprzedaż, aż po marketing. Największą satysfakcję daje mi moment, w którym autorska aplikacja desktopowa, skrypt czy niestandardowy moduł sklepowy eliminuje godziny żmudnego, powtarzalnego klikania.
+                </p>
+                <p>
+                    Kluczowe jest dla mnie przyspieszenie codziennych procesów. Kiedy widzę, że zadania takie jak generowanie zaawansowanych statystyk sprzedażowych, masowa wysyłka mailingów czy wystawianie specyficznych dokumentów zajmują ułamki sekund zamiast wielu godzin, wiem, że moja praca ma sens. Tworzę narzędzia, które zdejmują z ludzi ciężar operacyjny, pozwalając im skupić się na tym, co naprawdę ważne – analizie wyników i relacjach z klientami.
+                </p>
+                <p>
+                    Tworząc kod, zawsze myślę o bieżących i przyszłych potrzebach. Środowisko e-commerce i dystrybucji zmienia się bardzo dynamicznie, dlatego nie buduję zamkniętych i sztywnych systemów, ale elastyczne rozwiązania. Skrypt lub moduł, który dziś rozwiązuje konkretny problem z jednym raportem czy procesem zakupowym, projektuję tak, aby przy kolejnej kampanii promocyjnej lub zmianach w infrastrukturze można było go łatwo rozbudować.
+                </p>
+                <p>
+                    Tym, co dodatkowo napędza mnie do działania, jest całkowita eliminacja błędu ludzkiego oraz inżynierska sprawczość. Automatyzacja przepływu danych daje gwarancję precyzji, co w przypadku systemów sprzedażowych czy finansowych jest absolutnym fundamentem. Możliwość zidentyfikowania "wąskiego gardła" w firmie, a następnie samodzielne wymyślenie i zakodowanie narzędzia, które ten problem trwale rozwiązuje, to dla mnie najlepsza definicja dobrze wykonanej pracy.
+                </p>
+            </div>
+        </section>
+
+        <section id="technologie" class="py-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto border-t border-white/5">
+            <h2 class="text-3xl md:text-4xl font-bold mb-10 flex items-center gap-3">
+                <i class="ph-fill ph-cpu text-brand-blue"></i> Zastosowane technologie
+            </h2>
+
+            <div class="flex flex-wrap gap-4">
+                <div class="glass-panel px-4 py-2 rounded-lg font-mono text-sm border-white/20 hover:border-brand-blue hover:text-brand-blue transition-colors cursor-default">Python</div>
+                <div class="glass-panel px-4 py-2 rounded-lg font-mono text-sm border-white/20 hover:border-brand-blue hover:text-brand-blue transition-colors cursor-default">PyQt</div>
+                <div class="glass-panel px-4 py-2 rounded-lg font-mono text-sm border-white/20 hover:border-brand-blue hover:text-brand-blue transition-colors cursor-default">Tkinter</div>
+                <div class="glass-panel px-4 py-2 rounded-lg font-mono text-sm border-white/20 hover:border-brand-blue hover:text-brand-blue transition-colors cursor-default">pandas</div>
+                <div class="glass-panel px-4 py-2 rounded-lg font-mono text-sm border-white/20 hover:border-brand-blue hover:text-brand-blue transition-colors cursor-default">PrestaShop 1.6 & 8.2</div>
+                <div class="glass-panel px-4 py-2 rounded-lg font-mono text-sm border-white/20 hover:border-brand-blue hover:text-brand-blue transition-colors cursor-default">SQL</div>
+                <div class="glass-panel px-4 py-2 rounded-lg font-mono text-sm border-white/20 hover:border-brand-blue hover:text-brand-blue transition-colors cursor-default">Groq API</div>
+                <div class="glass-panel px-4 py-2 rounded-lg font-mono text-sm border-white/20 hover:border-brand-blue hover:text-brand-blue transition-colors cursor-default">LangChain</div>
+                <div class="glass-panel px-4 py-2 rounded-lg font-mono text-sm border-white/20 hover:border-brand-blue hover:text-brand-blue transition-colors cursor-default">DaVinci Resolve</div>
+                <div class="glass-panel px-4 py-2 rounded-lg font-mono text-sm border-white/20 hover:border-brand-blue hover:text-brand-blue transition-colors cursor-default">Comarch ERP Optima</div>
+                <div class="glass-panel px-4 py-2 rounded-lg font-mono text-sm border-white/20 hover:border-brand-blue hover:text-brand-blue transition-colors cursor-default">HTML/CSS (Outlook)</div>
+            </div>
+        </section>
+
+        <section id="projekty" class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/5">
+            <h2 class="text-3xl md:text-4xl font-bold mb-10 flex items-center gap-3">
+                <i class="ph-fill ph-kanban text-brand-blue"></i> Projekty
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Projekt 1 -->
+                <a href="generator-cennikow.html" class="glass-panel glass-panel-hover rounded-xl p-6 flex flex-col h-full transition-all duration-300 block group outline-none">
+                    <div class="mb-4">
+                        <i class="ph ph-file-doc text-4xl text-brand-blue mb-3"></i>
+                        <h3 class="text-xl font-bold text-white group-hover:text-brand-blue transition-colors">Generator Cenników</h3>
+                    </div>
+                    <p class="text-sm text-slate-400 mb-6 flex-grow leading-relaxed">
+                        Aplikacja desktopowa współpracująca z bazą Comarch ERP Optima. Błyskawicznie konwertuje dane magazynowe do sformatowanych cenników w MS Word i Excel.
+                    </p>
+                    <div class="mt-auto pt-4 border-t border-white/10 font-mono text-sm font-bold text-brand-blue flex items-center gap-1 group-hover:gap-2 transition-all">
+                        Zobacz szczegóły <i class="ph ph-arrow-right"></i>
+                    </div>
+                </a>
+
+                <!-- Projekt 2 -->
+                <a href="generator-mailingow.html" class="glass-panel glass-panel-hover rounded-xl p-6 flex flex-col h-full transition-all duration-300 block group outline-none">
+                    <div class="mb-4">
+                        <i class="ph ph-envelope-simple-open text-4xl text-brand-blue mb-3"></i>
+                        <h3 class="text-xl font-bold text-white group-hover:text-brand-blue transition-colors">Generator Mailingów</h3>
+                    </div>
+                    <p class="text-sm text-slate-400 mb-6 flex-grow leading-relaxed">
+                        Narzędzie ułatwiające działom marketingu tworzenie siatek produktowych i realizację bezpiecznej masowej wysyłki zgodnej z restrykcjami MS Outlook.
+                    </p>
+                    <div class="mt-auto pt-4 border-t border-white/10 font-mono text-sm font-bold text-brand-blue flex items-center gap-1 group-hover:gap-2 transition-all">
+                        Zobacz szczegóły <i class="ph ph-arrow-right"></i>
+                    </div>
+                </a>
+
+                <!-- Projekt 3 -->
+                <a href="statystyki-sprzedazy.html" class="glass-panel glass-panel-hover rounded-xl p-6 flex flex-col h-full transition-all duration-300 block group outline-none">
+                    <div class="mb-4">
+                        <i class="ph ph-chart-bar text-4xl text-brand-blue mb-3"></i>
+                        <h3 class="text-xl font-bold text-white group-hover:text-brand-blue transition-colors">Statystyki sprzedaży</h3>
+                    </div>
+                    <p class="text-sm text-slate-400 mb-6 flex-grow leading-relaxed">
+                        Zautomatyzowane ekstrakcje i analiza danych z PrestaShop. Generuje przejrzyste, interaktywne raporty oraz zestawienia w formatach PDF i XLSX.
+                    </p>
+                    <div class="mt-auto pt-4 border-t border-white/10 font-mono text-sm font-bold text-brand-blue flex items-center gap-1 group-hover:gap-2 transition-all">
+                        Zobacz szczegóły <i class="ph ph-arrow-right"></i>
+                    </div>
+                </a>
+
+                <!-- Projekt 4 -->
+                <a href="aplikacja-rejestry.html" class="glass-panel glass-panel-hover rounded-xl p-6 flex flex-col h-full transition-all duration-300 block group outline-none">
+                    <div class="mb-4">
+                        <i class="ph ph-folders text-4xl text-brand-blue mb-3"></i>
+                        <h3 class="text-xl font-bold text-white group-hover:text-brand-blue transition-colors">Aplikacja Rejestry</h3>
+                    </div>
+                    <p class="text-sm text-slate-400 mb-6 flex-grow leading-relaxed">
+                        Desktopowe rozwiązanie pozwalające zapanować nad rozproszonymi ewidencjami w firmie. Umożliwia łatwą organizację, wyszukiwanie i kontrolę danych w zastępstwie arkuszy kalkulacyjnych.
+                    </p>
+                    <div class="mt-auto pt-4 border-t border-white/10 font-mono text-sm font-bold text-brand-blue flex items-center gap-1 group-hover:gap-2 transition-all">
+                        Zobacz szczegóły <i class="ph ph-arrow-right"></i>
+                    </div>
+                </a>
+
+                <!-- Projekt 5 -->
+                <a href="menedzer-kategorii.html" class="glass-panel glass-panel-hover rounded-xl p-6 flex flex-col h-full transition-all duration-300 block group outline-none">
+                    <div class="mb-4">
+                        <i class="ph ph-tree-structure text-4xl text-brand-blue mb-3"></i>
+                        <h3 class="text-xl font-bold text-white group-hover:text-brand-blue transition-colors">Menedżer kategorii Prestashop 8.2</h3>
+                    </div>
+                    <p class="text-sm text-slate-400 mb-6 flex-grow leading-relaxed">
+                        Modułowe narzędzie optymalizujące proces układania drzewa asortymentu w e-commerce. Przyspiesza pracę administratorów sklepu poprzez integrację bezpośrednio na poziomie bazy.
+                    </p>
+                    <div class="mt-auto pt-4 border-t border-white/10 font-mono text-sm font-bold text-brand-blue flex items-center gap-1 group-hover:gap-2 transition-all">
+                        Zobacz szczegóły <i class="ph ph-arrow-right"></i>
+                    </div>
+                </a>
+
+                <!-- Projekt 6 -->
+                <a href="powiadomienia-kurier.html" class="glass-panel glass-panel-hover rounded-xl p-6 flex flex-col h-full transition-all duration-300 block group outline-none">
+                    <div class="mb-4">
+                        <i class="ph ph-truck text-4xl text-brand-blue mb-3"></i>
+                        <h3 class="text-xl font-bold text-white group-hover:text-brand-blue transition-colors">Powiadomienia o kurierze</h3>
+                    </div>
+                    <p class="text-sm text-slate-400 mb-6 flex-grow leading-relaxed">
+                        Autorska aplikacja desktopowa automatyzująca komunikację posprzedażową. Generuje dynamiczne szablony, inteligentnie formatuje czas dostawy i wysyła spersonalizowane wiadomości natywnie przez MS Outlook. Posiada wbudowany system autoupdate'ów.
+                    </p>
+                    <div class="mt-auto pt-4 border-t border-white/10 font-mono text-sm font-bold text-brand-blue flex items-center gap-1 group-hover:gap-2 transition-all">
+                        Zobacz szczegóły <i class="ph ph-arrow-right"></i>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+        
+        <section id="contact" class="py-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto border-t border-white/5">
+            <h2 class="text-3xl md:text-4xl font-bold mb-10 flex items-center justify-center gap-3 text-center">
+                <i class="ph-fill ph-envelope-simple text-brand-blue"></i> Kontakt
+            </h2>
+            
+            <div class="glass-panel rounded-3xl p-8 sm:p-14 text-center flex flex-col items-center">
+                <p class="text-slate-300 text-lg mb-10 max-w-2xl leading-relaxed">
+                    Masz pytania dotyczące moich projektów? Masz pomysły, który zautomatyzują procesy w firmie ORIMED? Zapraszam do kontaktu!
+                </p>
+                
+                <a href="mailto:r.jakubiak@orimed.pl" 
+                   class="inline-flex items-center gap-3 bg-brand-blue hover:bg-brand-hover text-white font-semibold py-4 px-8 rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(56,189,248,0.3)] hover:shadow-[0_0_30px_rgba(56,189,248,0.6)] hover:-translate-y-1">
+                    <i class="ph ph-paper-plane-tilt text-2xl"></i>
+                    Napisz wiadomość
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="border-t border-white/10 bg-black/50 py-8 text-center backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 text-slate-400 text-sm">
+            <p>&copy; <span id="year"></span> Robert Jakubiak. Wszelkie prawa zastrzeżone.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Aktualizacja roku w stopce
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Obsługa menu mobilnego
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+        mobileLinks.forEach(link => link.addEventListener('click', () => menu.classList.add('hidden')));
+
+        // Efekt pisania w terminalu (Typewriter effect)
+        document.addEventListener("DOMContentLoaded", () => {
+            const textToType = "> Inicjalizacja systemu...\n> Witaj, jestem Robert.\n> Tworzę narzędzia, które oszczędzają Twój czas i eliminują błędy.";
+            const targetElement = document.getElementById('terminal-text');
+            let index = 0;
+
+            function typeChar() {
+                if (index < textToType.length) {
+                    // Obsługa znaków nowej linii
+                    if (textToType.charAt(index) === '\n') {
+                        targetElement.innerHTML += '<br>';
+                    } else {
+                        targetElement.innerHTML += textToType.charAt(index);
+                    }
+                    index++;
+                    // Zmienna prędkość pisania imitująca ludzkie zachowanie (30-80ms)
+                    let timeout = Math.floor(Math.random() * 50) + 30; 
+                    if (textToType.charAt(index - 1) === '\n') timeout = 500; // Pauza po nowej linii
+                    
+                    setTimeout(typeChar, timeout);
+                }
+            }
+
+            // Rozpocznij pisanie po 0.5s po załadowaniu
+            setTimeout(typeChar, 500);
+        });
+    </script>
+</body>
+</html>
